@@ -1,6 +1,6 @@
 {
-  “require”: {
-    “ext-mbstring”: “*”,
-    “ext-imagick”: “*”
+  "require": {
+    "ext-mbstring": "*",
+    "ext-imagick": "*"
   }
 }
