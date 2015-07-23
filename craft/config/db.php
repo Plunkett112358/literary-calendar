@@ -9,21 +9,20 @@
 
 return array(
 
+  $url=parse_url(getenv("CLEARDB_DATABASE_URL"));
+
 	'*' => array(
-		'tablePrefix' => 'craft',
-    'database' => 'literary_calendar_craft'
+    'server' => $url["host"],
+    'user' => $url["user"],
+    'password' => $url["pass"],
+    'database' => substr($url["path"],1),
+    'tablePrefix' => 'craft',
   ),
 
   '.dev' => array(
     'server' => 'localhost',
     'user' => 'root',
     'password' => 'root'
-  ),
-
-  '.org' => array(
-  	'server' => 'localhost',
-    'user' => '',
-    'password' => ''
   )
 
 );
