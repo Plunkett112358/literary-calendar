@@ -28,5 +28,5 @@ if(getenv("CLEARDB_DATABASE_URL")) {
       'user' => 'root',
       'password' => 'root'
     )
-  )
+  );
 }
