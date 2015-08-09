@@ -1,41 +1,128 @@
 {% extends '_layout' %}
 
-{%  set events = craft.entries.section('event').find() %}
-
-
 {% block content %}
+
+{% set params = {} %}
+
+{% if craft.request.getParam('borough') != null %}
+  {% set borough = craft.categories.slug(craft.request.getParam('borough')).find() %}
+  {% set params = params|merge({relatedTo: borough}) %}
+{% endif %}
+
+{% if craft.request.getParam('type') != null %}
+  {% set type = craft.categories.slug(craft.request.getParam('type')).find() %}
+  {% set params = params|merge({relatedTo: type}) %}
+{% endif %}
+
+
+{% set params = params|merge({ section : 'events', eventEndDate : '>= ' ~ now.w3c(), order : 'eventEndDate' }) %}
+
+{%  set events = craft.entries(params).find() %}
 
 <!-- filters: borough, genre, date -->
 <div class="page-header"> 
-  <img src="holder.js/1250x400?text=Image Here">
+  <img src="holder.js/1250x300?text=Image Here">
 </div>
 
  
 <div class="container">
-        {% for event in events %}
-
+  <div class="row">
+    <div class="col-md-8">
+      {% for date, eventsThisMonth in events |group("eventStartDate|date('F Y')")%}
+        <section>
+          <hgroup>
+            <h6>{{date | date("F,  Y ")}}</h3>
+          </hgroup>
+          {% for event in eventsThisMonth %}
           <div class="media">
             <div class="media-left pull-left media-middle">
-              <a href="#">
-                <img src="holder.js/150x150?text=Image" alt="">
+              <a href="{{event.url}}">
+                <img src="holder.js/200x200?text=Image" alt="">
               </a>
             </div>
               <div class="media-body">
-                <h3>{{ event.title }}</h3>
+                <h6>{{ event.author.lastName }}</h6>
+                <a href="{{ event.url}}"><h3 style="margin-top:0px; margin-bottom:0px;">{{ event.title }}</h3></a>
+                {% if event.eventType | length %}
+                  {% for type in event.eventType %}
+                  <h6 class="badge" style="margin-top:0px; margin-bottom:0px;"> {{ type.title }}</h6>
+                  {% endfor %}
+                {% endif %}
                 <h4>
                     {{ event.eventStartDate | date('F j, Y') }}
                     {% if event.eventEndDate != event.eventStartDate %}
-                      {{ event.eventEndDate | date('F j, Y') }}
+                      – {{ event.eventEndDate | date('F j, Y') }}
                     {% endif %}
 
-                  </h4>
-                  <h5 class="date-time">{{ event.eventStartDate | date('g:ia') }}–{{ event.eventEndDate | date('g:ia') }}</h5>
+                </h4>
+                <h5 class="date-time">{{ event.eventStartDate | date('g:ia') }} – {{ event.eventEndDate | date('g:ia') }}</h5>
+                {% if event.borough | length %}
+                <h5><span class="glyphicon glyphicon-map-marker"></span> 
+                    {{ event.borough[0].title }}
+                </h5>
+                {% endif %}
+                <a href="" class="btn btn-default"> Sync with Calendar</a>
               </div>
             </div>
-            <hr>
-          {% endfor %}
 
-    
+          </section>
+          <hr>
+          {% endfor %}
+      {% endfor %}
+    </div>
+    <div class="col-md-4">
+      <div class="well">
+        <h6 class="text-center">Sort By</h6>
+        <label>Event Type:</label>
+        {% set types = craft.categories.group('genre') %}
+        <div class="dropdown">
+          <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <!-- <img class="pull-right " src="/image/dropdown.png"> -->
+              <span class="pull-right glyphicon glyphicon-menu-down"></span>
+
+            {% if (type is defined and type != null) %}
+                        {{type[0].title }}
+                        {% else %}
+                          Select a Filter
+                        {% endif %}
+            
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <li role="presentation" {% if craft.request.getParam('type') == null %}class="active" {% endif %}><a href="/{% if (borough is defined and borough != null) %}?borough={{borough[0].slug}}&{% else %}?{% endif %}">All</a></li>
+            {% for type in types %}
+            <li role="presentation" {% if craft.request.getParam('type') == '{{type.slug}}' %}class="active" {% endif %}><a href="/?type={{type.slug}}">{{type}}</a></li>
+            {% endfor %}
+
+          </ul>
+        </div>
+
+        <label>Borough:</label>
+          {% set boroughs = craft.categories.group('boroughs') %}
+          <div class="dropdown ">
+            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <!-- <img class="pull-right " src="/image/dropdown.png"> -->
+                <span class="pull-right glyphicon glyphicon-menu-down"></span>
+                 {% if (borough is defined and borough != null) %}
+                          {{borough[0].title }}
+                          {% else %}
+                            Select a Filter
+                          {% endif %}
+            
+            </button>
+            <ul class="dropdown-menu dropdown-large" role="menu" aria-labelledby="dLabel">
+              <li role="presentation" {% if craft.request.getParam('borough') == null %}class="active" {% endif %}><a href="/">All</a></li>
+              {% for borough in boroughs %}
+              <li role="presentation" {% if craft.request.getParam('borough') == '{{borough.slug}}' %}class="active" {% endif %}><a href="/{% if (type is defined and type != null) %}?type={{type[0].slug}}&{% else %}?{% endif %}borough={{borough.slug}}">{{borough.title }}</a></li>
+              {% endfor %}
+
+            </ul>
+          </div>
+
+
+      </div>
+    </div>
+  </div>
+        
 </div>
 
 
