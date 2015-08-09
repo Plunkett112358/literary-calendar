@@ -1,14 +1,41 @@
 {% extends '_layout' %}
 
+{%  set events = craft.entries.section('event').find() %}
+
 
 {% block content %}
 
+<!-- filters: borough, genre, date -->
+<div class="page-header"> 
+  <img src="holder.js/1250x400?text=Image Here">
+</div>
+
+ 
 <div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      Test
-    </div>
-  </div>
+        {% for event in events %}
+
+          <div class="media">
+            <div class="media-left pull-left media-middle">
+              <a href="#">
+                <img src="holder.js/150x150?text=Image" alt="">
+              </a>
+            </div>
+              <div class="media-body">
+                <h3>{{ event.title }}</h3>
+                <h4>
+                    {{ event.eventStartDate | date('F j, Y') }}
+                    {% if event.eventEndDate != event.eventStartDate %}
+                      {{ event.eventEndDate | date('F j, Y') }}
+                    {% endif %}
+
+                  </h4>
+                  <h5 class="date-time">{{ event.eventStartDate | date('g:ia') }}–{{ event.eventEndDate | date('g:ia') }}</h5>
+              </div>
+            </div>
+            <hr>
+          {% endfor %}
+
+    
 </div>
 
 
