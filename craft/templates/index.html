@@ -41,7 +41,7 @@
               </a>
             </div>
               <div class="media-body">
-                <h6>{{ event.author.lastName }}</h6>
+                <a href="/series/{{ event.author.lastName |replace(' ', '-') }}"><h6>{{ event.author.lastName }}</h6></a>
                 <a href="{{ event.url}}"><h3 style="margin-top:0px; margin-bottom:0px;">{{ event.title }}</h3></a>
                 {% if event.eventType | length %}
                   {% for type in event.eventType %}
@@ -71,7 +71,7 @@
       {% endfor %}
     </div>
     <div class="col-md-4">
-      <div class="well">
+      <div class="well" id="filters">
         <h6 class="text-center">Sort By</h6>
         <label>Event Type:</label>
         {% set types = craft.categories.group('genre') %}
@@ -118,6 +118,10 @@
             </ul>
           </div>
 
+          <label>Date:</label>
+          
+          <input type="text" id="datepicker">
+
 
       </div>
     </div>
@@ -125,5 +129,9 @@
         
 </div>
 
-
+<script>
+ $(function() {
+    $( "#datepicker" ).datepicker();
+  });
+</script>
 {% endblock %}
