@@ -8,9 +8,9 @@
 <div class="container">
 	<div class="page-header">
 		<div class="pull-right">
-			<a href="{{entry.facebook}}"><img width="30px" src="/images/facebook.png"></a>
-			<a href=""><img  width="30px"src="/images/twitter.png"></a>
-			<a href=""><img width="30px" src="/images/instagram.png"></a>
+			<a style="margin-right:10px;" href="{{entry.facebook}}"><img width="30px" src="/images/facebook.png"></a>
+			<a style="margin-right:10px;" href=""><img  width="30px"src="/images/twitter.png"></a>
+			<a style="margin-right:10px;" href=""><img width="30px" src="/images/instagram.png"></a>
 		</div>
 		<a href="series/{{readingSeries.lastName |replace({' ': '-'}) }}">
 			<h5>{{ readingSeries.lastName }} </h5>
@@ -33,26 +33,52 @@
 			<h4 class="date-time">{{ entry.eventStartDate | date('g:ia') }} – {{ entry.eventEndDate | date('g:ia') }}</h4>
 			<p>{{ entry.description}}</p>
 
+			<div class="well text-center">
+			
+				<div class="row">
+					{% if entry.facebookInvite %}
+					<div class="col-md-6">
+						<a href="">Facebook Event Page</a>
+					</div>
+					{% endif %}
+
+					{% if entry.externalTicketingUrl %}
+					<div class="col-md-6">
+						<a href="{{ entry.externalTicketingUrl }}">Buy Tickets on {{ entry.externalTicketingUrlName  }}</a>
+					</div>
+					{% endif %}
+
+
+				</div>
+			</div>
+
+
 			<h2>Readers</h2>
-			{{entry.featuredAuthor |length }}
+			
 			{% for reader in entry.featuredAuthor %}
 			<div class="media">
-			  <div class="media-left">
+			  <div class="pull-left">
 			    <a href="%">
-			      <img class="media-object" src="{{ reader.image[0].url }}" alt="...">
+			      <img width="90px"class="media-object" src="{{ reader.image[0].url }}" alt="...">
 			    </a>
 			  </div>
 			  <div class="media-body">
 			    <h4 class="media-heading">{{ reader.readerName }}</h4>
-			    
+			    <p>{{ reader.biography }}</p>
 			  </div>
 			</div>
+			<hr>
 			{% endfor %}
 		</div>
 
 		<div class="col-md-4">
+			<a style="margin-bottom: 20px" href="" class="btn btn-block btn-warning"><h4>Sync with Calendar</h4></a>
 
 			<a style="margin-bottom: 20px" href="series/{{readingSeries.lastName |replace({' ': '-'}) }}" class="btn btn-block btn-primary"><h4>View More From {{ readingSeries.lastName }}</h4></a>
+
+
+
+
 
 			{% set options = {
 				id: 'map',
@@ -80,8 +106,6 @@
 				<h5>{{ entry.city }}, {{ entry.state }}</h5>
 				<h5>{{ entry.zipCode }}</h5>
 
-				
-				
 			</div>
 
 	
