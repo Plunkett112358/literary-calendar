@@ -34,10 +34,11 @@
 			<p>{{ entry.description}}</p>
 
 			<h2>Readers</h2>
+			{{entry.featuredAuthor |length }}
 			{% for reader in entry.featuredAuthor %}
 			<div class="media">
 			  <div class="media-left">
-			    <a href="#">
+			    <a href="%">
 			      <img class="media-object" src="{{ reader.image[0].url }}" alt="...">
 			    </a>
 			  </div>
