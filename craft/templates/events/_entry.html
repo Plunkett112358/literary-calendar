@@ -32,6 +32,21 @@
 			{% endif %}
 			<h4 class="date-time">{{ entry.eventStartDate | date('g:ia') }} – {{ entry.eventEndDate | date('g:ia') }}</h4>
 			<p>{{ entry.description}}</p>
+
+			<h2>Readers</h2>
+			{% for reader in entry.featuredAuthor %}
+			<div class="media">
+			  <div class="media-left">
+			    <a href="#">
+			      <img class="media-object" src="{{ reader.image[0].url }}" alt="...">
+			    </a>
+			  </div>
+			  <div class="media-body">
+			    <h4 class="media-heading">{{ reader.readerName }}</h4>
+			    
+			  </div>
+			</div>
+			{% endfor %}
 		</div>
 
 		<div class="col-md-4">
@@ -73,13 +88,6 @@
 
 	</div>
 	
-
-
-
-
-
-
-
 </div>
 
 
