@@ -50,12 +50,21 @@
                 {% endif %}
                 <h4>
                     {{ event.eventStartDate | date('F j, Y') }}
-                    {% if event.eventEndDate != event.eventStartDate %}
+                    {% if event.eventEndDate | date('F j, Y') != event.eventStartDate | date('F j, Y') %}
                       – {{ event.eventEndDate | date('F j, Y') }}
                     {% endif %}
 
                 </h4>
-                <h5 class="date-time">{{ event.eventStartDate | date('g:ia') }} – {{ event.eventEndDate | date('g:ia') }}</h5>
+
+                
+
+
+                <h5 class="date-time">{{ event.eventStartTime | date('g:ia') }} 
+                  {% if event.eventEndTime %}
+                  – 
+                  {{ event.eventEndTime | date('g:ia') }}
+                  {% endif %}
+                </h5>
                 {% if event.borough | length %}
                 <h5><span class="glyphicon glyphicon-map-marker"></span> 
                     {{ event.borough[0].title }}

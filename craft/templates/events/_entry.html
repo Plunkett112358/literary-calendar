@@ -44,15 +44,11 @@
 
 					{% if entry.externalTicketingUrl %}
 					<div class="col-md-6">
-						<a href="{{ entry.externalTicketingUrl }}">Buy Tickets on {{ entry.externalTicketingUrlName  }}</a>
+						<a target="_blank" href="{{ entry.externalTicketingUrl }}">Buy Tickets on {{ entry.externalTicketingUrlName  }}</a>
 					</div>
 					{% endif %}
-
-
 				</div>
 			</div>
-
-
 			<h2>Readers</h2>
 			
 			{% for reader in entry.featuredAuthor %}
@@ -72,12 +68,9 @@
 		</div>
 
 		<div class="col-md-4">
-			<a style="margin-bottom: 20px" href="" class="btn btn-block btn-warning"><h4>Sync with Calendar</h4></a>
+			<a style="margin-bottom: 20px" href="" class="btn btn-block btn-default"><h4>Sync with Calendar</h4></a>
 
-			<a style="margin-bottom: 20px" href="series/{{readingSeries.lastName |replace({' ': '-'}) }}" class="btn btn-block btn-primary"><h4>View More From {{ readingSeries.lastName }}</h4></a>
-
-
-
+			<a style="margin-bottom: 20px" href="/series/{{readingSeries.lastName |replace({' ': '-'}) }}" class="btn btn-block btn-primary"><h4>View More From {{ readingSeries.lastName }}</h4></a>
 
 
 			{% set options = {

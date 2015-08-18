@@ -1,0 +1,15 @@
+{% extends '_layout' %}
+
+{% block content %}
+
+{% set name =  craft.request.getLastSegment() |replace({'-': ' '}) %}
+{{name}}
+
+{% set entry = craft.users.lastName(name).first() %}
+{{ entry.lastName }}
+
+{{ entry.description }}
+
+{{ entry.streetAddress}}
+
+{% endblock %}
