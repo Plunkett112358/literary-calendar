@@ -2,7 +2,11 @@
 
 {% block content %}
 
-{% set readingSeries = craft.users.email( entry.author ).first() %}
+{% set user = craft.users.email( entry.author ).first() %}
+
+
+
+{% set readingSeries = craft.entries.slug( 'brooklyn-arts-press' ).first() %}
 
 
 <div class="container">
@@ -12,8 +16,8 @@
 			<a style="margin-right:10px;" href=""><img  width="30px"src="/images/twitter.png"></a>
 			<a style="margin-right:10px;" href=""><img width="30px" src="/images/instagram.png"></a>
 		</div>
-		<a href="series/{{readingSeries.lastName |replace({' ': '-'}) }}">
-			<h5>{{ readingSeries.lastName }} </h5>
+		<a href="/series/{{readingSeries.title |replace({' ': '-'}) }}">
+			<h5>{{ readingSeries.title }} </h5>
 		</a>
 		<h1>{{ entry.title }}</h1>
 
@@ -70,7 +74,7 @@
 		<div class="col-md-4">
 			<a style="margin-bottom: 20px" href="" class="btn btn-block btn-default"><h4>Sync with Calendar</h4></a>
 
-			<a style="margin-bottom: 20px" href="/series/{{readingSeries.lastName |replace({' ': '-'}) }}" class="btn btn-block btn-primary"><h4>View More From {{ readingSeries.lastName }}</h4></a>
+			<a style="margin-bottom: 20px" href="/series/{{readingSeries.title |replace({' ': '-'}) }}" class="btn btn-block btn-primary"><h4>View More From {{ readingSeries.title }}</h4></a>
 
 			{% set options = {
 				id: 'map',

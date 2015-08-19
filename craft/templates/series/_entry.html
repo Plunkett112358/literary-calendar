@@ -3,13 +3,19 @@
 {% block content %}
 
 {% set name =  craft.request.getLastSegment() |replace({'-': ' '}) %}
-{{name}}
 
-{% set entry = craft.users.lastName(name).first() %}
-{{ entry.lastName }}
+{% set user = craft.users.lastName(name).first() %}
 
-{{ entry.description }}
+{% set series = craft.entries.slug( craft.request.getLastSegment() ).first() %}
 
-{{ entry.streetAddress}}
+<div class="container">
+	
+	<div class="page-header">
+		<h1>{{ series.title }}</h1>
+	</div>
+
+</div>
+
+
 
 {% endblock %}
