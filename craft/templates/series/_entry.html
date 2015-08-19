@@ -8,10 +8,124 @@
 
 {% set series = craft.entries.slug( craft.request.getLastSegment() ).first() %}
 
+{% set wide = {
+    mode: 'crop',
+    width: 1450,
+    height: 400,
+    quality: 75,
+    position: 'middle-middle'
+} %}
+
+{% if series.gallery | length %}
+	<img src="{{ series.gallery[0].getUrl(wide) }}">
+{% endif %}
+
 <div class="container">
 	
 	<div class="page-header">
-		<h1>{{ series.title }}</h1>
+
+		<h1>
+			{% if series.seriesLogo |length %}
+			<img width="150px;" src="{{ series.seriesLogo[0].url }}">
+			{% endif  %}
+			{{ series.title }}</h1>
+
+	</div>
+
+	<div class="row">
+		<div class="col-md-8">
+			<p>{{series.description }}</p>
+			<hr>
+			<article>
+		{% set events = craft.entries.section('events').authorId(user.id) %}
+
+		
+		{% for date, eventsThisMonth in events |group("eventStartDate|date('F Y')")%}
+        <section>
+          <hgroup>
+            <h6>{{date | date("F,  Y ")}}</h3>
+          </hgroup>
+          {% for event in eventsThisMonth %}
+          <div class="media">
+            <div class="media-left pull-left media-middle">
+              <a href="{{event.url}}">
+                <img src="holder.js/200x200?text=Image" alt="">
+              </a>
+            </div>
+              <div class="media-body">
+                <h6>{{ event.author.lastName }}</h6>
+                <a href="{{ event.url}}"><h3 style="margin-top:0px; margin-bottom:0px;">{{ event.title }}</h3></a>
+                {% if event.eventType | length %}
+                  {% for type in event.eventType %}
+                  <h6 class="badge" style="margin-top:0px; margin-bottom:0px;"> {{ type.title }}</h6>
+                  {% endfor %}
+                {% endif %}
+                <h4>
+                    {{ event.eventStartDate | date('F j, Y') }}
+                    {% if event.eventEndDate | date('F j, Y') != event.eventStartDate | date('F j, Y') %}
+                      – {{ event.eventEndDate | date('F j, Y') }}
+                    {% endif %}
+
+                </h4>
+
+                
+
+
+                <h5 class="date-time">{{ event.eventStartTime | date('g:ia') }} 
+                  {% if event.eventEndTime %}
+                  – 
+                  {{ event.eventEndTime | date('g:ia') }}
+                  {% endif %}
+                </h5>
+                {% if event.borough | length %}
+                <h5><span class="glyphicon glyphicon-map-marker"></span> 
+                    {{ event.borough[0].title }}
+                </h5>
+                {% endif %}
+                <a href="" class="btn btn-default"> Sync with Calendar</a>
+              </div>
+            </div>
+
+          </section>
+          <hr>
+          {% endfor %}
+      {% endfor %}
+				
+			</article>
+
+		</div>
+
+		<div class="col-md-4">
+			<div class="pull-right">
+				<a style="margin-right:10px;" href="{{series.facebook}}"><img width="30px" src="/images/facebook.png"></a>
+				<a style="margin-right:10px;" href=""><img  width="30px"src="/images/twitter.png"></a>
+				<a style="margin-right:10px;" href=""><img width="30px" src="/images/instagram.png"></a>
+				<hr>
+			</div>
+
+			{% set options = {
+				id: 'map',
+				width: '100%',
+				height: '300px',
+				disableDefaultUI: true,
+				options:mapOptions,
+			} %}
+
+			{{ craft.googleMaps.map(options) }}
+
+			{{ craft.googleMaps.data('map', series.map,
+					{ markerOptions: {
+					   
+					    }
+				    }
+			) }}
+
+
+		
+          <a class="twitter-timeline" href="https://twitter.com/BAP_Books" data-widget-id="634099446503051264">Tweets by @BAP_Books</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        
+		</div>
 	</div>
 
 </div>

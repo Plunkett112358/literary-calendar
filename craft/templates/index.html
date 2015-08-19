@@ -15,7 +15,7 @@
 {% endif %}
 
 
-{% set params = params|merge({ section : 'events', eventEndDate : '>= ' ~ now.w3c(), order : 'eventEndDate' }) %}
+{% set params = params|merge({ section : 'events', eventStartDate : '>= ' ~ now.w3c(), order : 'eventStartDate' }) %}
 
 {%  set events = craft.entries(params).find() %}
 
@@ -41,7 +41,7 @@
               </a>
             </div>
               <div class="media-body">
-                <h6>{{ event.author.lastName }}</h6>
+                <a href="series/{{ event.author.lastName |replace({' ': '-'}) }}"><h6>{{ event.author.lastName }}</h6></a>
                 <a href="{{ event.url}}"><h3 style="margin-top:0px; margin-bottom:0px;">{{ event.title }}</h3></a>
                 {% if event.eventType | length %}
                   {% for type in event.eventType %}

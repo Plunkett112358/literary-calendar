@@ -12,9 +12,18 @@
 <div class="container">
 	<div class="page-header">
 		<div class="pull-right">
+			{% if entry.facebook %}
 			<a style="margin-right:10px;" href="{{entry.facebook}}"><img width="30px" src="/images/facebook.png"></a>
-			<a style="margin-right:10px;" href=""><img  width="30px"src="/images/twitter.png"></a>
-			<a style="margin-right:10px;" href=""><img width="30px" src="/images/instagram.png"></a>
+			{% endif %}
+
+			{% if entry.twitter %}
+			<a style="margin-right:10px;" href="{{entry.twitter}}"><img  width="30px"src="/images/twitter.png"></a>
+			{% endif %}
+
+			{% if entry.instagram %}
+			<a style="margin-right:10px;" href="{{entry.instagram}}"><img width="30px" src="/images/instagram.png"></a>
+			{% endif %}
+
 		</div>
 		<a href="/series/{{readingSeries.title |replace({' ': '-'}) }}">
 			<h5>{{ readingSeries.title }} </h5>
