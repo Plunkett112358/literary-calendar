@@ -1,0 +1,49 @@
+{% import "_includes/forms" as forms %}
+
+<p>Important: Make sure you've checked the Enable public "Send Feedback" tab in Bugherd.</p>
+<p>You can have more fine grain control over who sees the tab below but none of it will work without public access turned on.</p>
+
+<hr/>
+
+<h3>Settings</h3>
+
+{{ forms.textField({
+    first: true,
+    label: "Project Key",
+    instructions: "",
+    name: 'projectKey',
+    required: true,
+    value: settings.projectKey,
+    size: 33
+}) }}
+
+
+{{ forms.textField({
+
+    label: "Feedback Tab Text",
+    instructions: "The Text you want to appear in the feedback tab",
+    name: 'tabText',
+    value: settings.tabText,
+    required: true,
+    size: 33
+}) }}
+
+{{ forms.lightswitchField({
+
+    label: "Show the tab on the front end site and in the control panel?",
+    instructions: "Requires {{ getFootHtml() }} to be in your templates. <A href=\"http://buildwithcraft.com/docs/templating/functions#getFootHtml\" target=\"_blank\">Read more about getFootHtml() in the Craft Documentation</a> for more infomation.",
+    name: 'frontEnd',
+    on: settings.frontEnd,
+    required: true,
+    size: 33
+}) }}
+
+{{ forms.lightswitchField({
+
+    label: "Enable the tab for all public visitors?",
+    instructions: "Defaults to off and only shows tab to users with CP access",
+    name: 'publicAccess',
+    on: settings.publicAccess,
+    required: true,
+    size: 33
+}) }}

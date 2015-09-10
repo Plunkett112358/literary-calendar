@@ -1,0 +1,65 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: "Key"|t,
+    id: 'key',
+    name: 'key',
+    instructions: "The key that will verify calls to the plugin. This must be set for calls to work."|t,
+    value: settings.key,
+    autofocus: true,
+    errors: settings.getErrors('key')
+}) }}
+
+<div class="field">
+  <div class="heading">
+    <label for="settings-key">Assets Folder</label>
+    <div class="instructions">
+      <p>Select the assets folder to copy the backup into (works great with S3 or google cloud sources for an offsite backup).</p>
+    </div>
+  </div>
+  <select name="folderId">
+
+    <option value="0">
+      Dont save into assets
+    </option>
+    {% for folder in tree %}
+
+    <option value="{{folder.id}}" {% if settings.folderId == folder.id %} selected{% endif %}>
+      {{ folder.name}}
+    </option>
+
+    {% endfor %}
+  </select>
+</div>
+
+
+
+{{ forms.textField({
+    label: "Old backups to keep"|t,
+    id: 'revisions',
+    name: 'revisions',
+    instructions: "Set the maximum number of backups you would like to retain. Leave blank for unlimited * Warning * This could fill your server up!"|t,
+    value: settings.revisions,
+    errors: settings.getErrors('revisions')
+}) }}
+
+
+{% set key = settings.key ? settings.key : '1234567890' %}
+
+<hr />
+
+<h2>Examples</h2>
+
+<p>Simply create a GET or a POST request to the action URL.</p>
+
+<h3>Template</h3>
+
+<code>{{ "{{ siteUrl(craft.config.get('actionTrigger') ~ '/dump/backup', { key: '" ~ key ~ "' }) }}"|raw }}</code>
+
+<h3>URL</h3>
+
+<code>{{ siteUrl(craft.config.get('actionTrigger') ~ '/dump/backup', { key: key }) }}</code>
+
+<h3>Cron</h3>
+<p>Create a cron job with the following command to create regular backups. Ensure you've set (above) the maximum number of backups to keep.</p>
+<code>wget {{ siteUrl(craft.config.get('actionTrigger') ~ '/dump/backup', { key: key }) }} >/dev/null 2>&1</code>

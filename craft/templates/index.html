@@ -15,13 +15,13 @@
 {% endif %}
 
 
-{% set params = params|merge({ section : 'events', eventEndDate : '>= ' ~ now.w3c(), order : 'eventEndDate' }) %}
+{% set params = params|merge({ section : 'events', eventStartDate : '>= ' ~ now.w3c(), order : 'eventStartDate' }) %}
 
 {%  set events = craft.entries(params).find() %}
 
 <!-- filters: borough, genre, date -->
 <div class="page-header"> 
-  <img src="holder.js/1250x300?text=Image Here">
+  <img src="holder.js/1365x300?text=Image Here">
 </div>
 
  
@@ -41,7 +41,9 @@
               </a>
             </div>
               <div class="media-body">
-                <a href="/series/{{ event.author.lastName |replace(' ', '-') }}"><h6>{{ event.author.lastName }}</h6></a>
+
+                <a href="series/{{ event.author.lastName |replace({' ': '-'}) }}"><h6>{{ event.author.lastName }}</h6></a>
+
                 <a href="{{ event.url}}"><h3 style="margin-top:0px; margin-bottom:0px;">{{ event.title }}</h3></a>
                 {% if event.eventType | length %}
                   {% for type in event.eventType %}
@@ -50,12 +52,19 @@
                 {% endif %}
                 <h4>
                     {{ event.eventStartDate | date('F j, Y') }}
-                    {% if event.eventEndDate != event.eventStartDate %}
+                    {% if event.eventEndDate | date('F j, Y') != event.eventStartDate | date('F j, Y') %}
                       – {{ event.eventEndDate | date('F j, Y') }}
                     {% endif %}
 
                 </h4>
-                <h5 class="date-time">{{ event.eventStartDate | date('g:ia') }} – {{ event.eventEndDate | date('g:ia') }}</h5>
+
+
+                <h5 class="date-time">{{ event.eventStartTime | date('g:ia') }} 
+                  {% if event.eventEndTime %}
+                  – 
+                  {{ event.eventEndTime | date('g:ia') }}
+                  {% endif %}
+                </h5>
                 {% if event.borough | length %}
                 <h5><span class="glyphicon glyphicon-map-marker"></span> 
                     {{ event.borough[0].title }}
