@@ -127,10 +127,10 @@
 				<h5>{{ series.zipCode }}</h5>
 
 			</div>
-
+			
 		
-          <a class="twitter-timeline" href="https://twitter.com/BAP_Books" data-widget-id="634099446503051264">Tweets by @BAP_Books</a>
-		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          <a class="twitter-timeline" href="{{series.twitter}}" data-widget-id="{{series.dataWidget}}">Tweets by {{ series.twitterHandle }} </a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         
 		</div>
 	</div>
