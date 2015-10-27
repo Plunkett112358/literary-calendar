@@ -21,7 +21,7 @@
 
 <!-- filters: borough, genre, date -->
 <div class="page-header"> 
-  <img src="holder.js/1365x300?text=Image Here">
+  <img src="holder.js/1405x300?text=Image Here">
 </div>
 
  
@@ -82,11 +82,13 @@
     <div class="col-md-4">
       <div class="well" id="filters">
         <h6 class="text-center">Sort By</h6>
-        <label>Event Type:</label>
+        <hr>
+
+       <!--  <label>Event Type:</label>
         {% set types = craft.categories.group('genre') %}
         <div class="dropdown">
           <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <!-- <img class="pull-right " src="/image/dropdown.png"> -->
+              
               <span class="pull-right glyphicon glyphicon-menu-down"></span>
 
             {% if (type is defined and type != null) %}
@@ -103,13 +105,51 @@
             {% endfor %}
 
           </ul>
-        </div>
+        </div> -->
+        <!-- Filter button 1-->
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sort By <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#">A-Z</a></li>
+           <li><a href="#">Z-A</a></li>
+        </ul>
+    </div>
 
-        <label>Borough:</label>
+    <!-- Filter button 2-->
+    <div class="btn-group">
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Location <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Manhattan</a></li>
+          <li><a href="#">Brooklyn</a></li>
+          <li><a href="#">Queens</a></li>
+          <li><a href="#">The Bronx</a></li>
+          <li><a href="#">Staten Island</a></li>
+        </ul>
+    </div>
+
+    <!-- Filter button 3-->
+    <div class="btn-group">
+      {% set types = craft.categories.group('genre') %}
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Genre <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          {% for type in types %}
+          <li><a href="#">{{type.title}}</a></li>
+          {% endfor %}
+          
+        </ul>
+    </div>
+
+<!--         <label>Borough:</label>
           {% set boroughs = craft.categories.group('boroughs') %}
           <div class="dropdown ">
             <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <!-- <img class="pull-right " src="/image/dropdown.png"> -->
+               
                 <span class="pull-right glyphicon glyphicon-menu-down"></span>
                  {% if (borough is defined and borough != null) %}
                           {{borough[0].title }}
@@ -125,11 +165,18 @@
               {% endfor %}
 
             </ul>
-          </div>
+          </div> -->
+          <hr>
+           <!-- Filter button 3-->
+            <div class="btn-group ">
+             
+                <button id="datepicker" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Date <span class="caret"></span>
+                </button>
+                
+            </div>
 
-          <label>Date:</label>
-          
-          <input type="text" id="datepicker">
+        
 
 
       </div>
