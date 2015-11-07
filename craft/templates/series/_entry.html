@@ -97,12 +97,22 @@
 
 		<div class="col-md-4">
 			<div class="pull-right">
+				{% if series.facebook %}
 				<a style="margin-right:10px;" href="{{series.facebook}}"><img width="30px" src="/images/facebook.png"></a>
-				<a style="margin-right:10px;" href=""><img  width="30px"src="/images/twitter.png"></a>
-				<a style="margin-right:10px;" href=""><img width="30px" src="/images/instagram.png"></a>
+				{% endif %}
+
+				{% if series.twitter %}
+				<a style="margin-right:10px;" href="{{series.twitter}}"><img  width="30px"src="/images/twitter.png"></a>
+				{% endif %}
+
+				{% if series.instagram %}
+				<a style="margin-right:10px;" href="{{ series.instagram}}"><img width="30px" src="/images/instagram.png"></a>
+				{% endif %}
+
 				<hr>
 			</div>
 
+			{% if series.streetAddress %}
 			{% set options = {
 				id: 'map',
 				width: '100%',
@@ -119,6 +129,7 @@
 					    }
 				    }
 			) }}
+
 			<div class="well text-center">
 				<h6 >LOCATION</h6>
 				
@@ -127,6 +138,7 @@
 				<h5>{{ series.zipCode }}</h5>
 
 			</div>
+			{% endif %}
 			
 		{% if series.dataWidget %}
           <a class="twitter-timeline" href="{{series.twitter}}" data-widget-id="{{series.dataWidget}}">Tweets by {{ series.twitterHandle }} </a>
