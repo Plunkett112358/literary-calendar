@@ -58,7 +58,7 @@
 	{% for entry in series %}
 		<div class="media">
 		  <div class="pull-left">
-		    <a href="#">
+		    <a href="{{entry.url}}">
 		    	{% if entry.seriesLogo | length %}
 		      <img width="80px" class="media-object" src="{{ entry.seriesLogo[0].url }}" alt="...">
 		      {% else %}

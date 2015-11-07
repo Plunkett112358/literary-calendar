@@ -17,8 +17,8 @@
     position: 'middle-middle'
 } %}
 
-{% if series.gallery | length %}
-	<img src="{{ series.gallery[0].getUrl(wide) }}">
+{% if series.mainImage | length %}
+	<img src="{{ series.mainImage[0].getUrl(wide) }}">
 {% endif %}
 
 <div class="container">
