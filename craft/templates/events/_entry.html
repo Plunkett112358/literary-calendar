@@ -47,11 +47,11 @@
 			<h4 class="date-time">{{ entry.eventStartDate | date('g:ia') }} – {{ entry.eventEndDate | date('g:ia') }}</h4>
 			<p>{{ entry.description}}</p>
 
-			{% if ( entry.facebookInvite or event.externalTicketingUrl) %}
+			{% if ( entry.facebookInvite or entry.externalTicketingUrl) %}
 			<div class="well text-center">
-			
+			{% if entry.facebookInvite %}
 				<div class="row">
-					{% if entry.facebookInvite %}
+					
 					<div class="col-md-6">
 						<a href="">Facebook Event Page</a>
 					</div>
@@ -63,15 +63,18 @@
 					</div>
 					{% endif %}
 				</div>
-				{% endif %}
+				
 			</div>
+			{% endif %}
 			<h2>Readers</h2>
 			
 			{% for reader in entry.featuredAuthor %}
 			<div class="media">
 			  <div class="pull-left">
 			    <a href="%">
+			    	{% if reader.image|length %}
 			      <img width="90px"class="media-object" src="{{ reader.image[0].url }}" alt="...">
+			      {% endif %}
 			    </a>
 			  </div>
 			  <div class="media-body">
