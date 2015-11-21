@@ -19,10 +19,22 @@
 
 {%  set events = craft.entries(params).find() %}
 
+{% set wide = {
+    mode: 'crop',
+    width: 1450,
+    height: 400,
+    quality: 75,
+    position: 'middle-bottom'
+} %}
+
 <!-- filters: borough, genre, date -->
-<div class="page-header"> 
-  <img src="holder.js/1405x300?text=Image Here">
-</div>
+
+  <!-- <img src="holder.js/1405x300?text=Image Here"> -->
+  <!-- <img src="http://api.ning.com/files/09M7-EtsXQQSD7K6vc*cf7*OlsRoPuoY-sEBw1MECTMwmiTjxl8pDRHiOGuEk97naeHhwpiIBOGfyLv7c-7rUJjNDAY0dkuH/OnBrooklynBridge.jpg"> -->
+  {% if entry.mainImage|length %}
+  <img  src="{{entry.mainImage[0].url(wide)}}">
+  {% endif %}
+
 
  
 <div class="container">

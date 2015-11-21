@@ -21,6 +21,8 @@
 	<img src="{{ series.mainImage[0].getUrl(wide) }}">
 {% endif %}
 
+
+
 <div class="container">
 	
 	<div class="page-header">
@@ -40,56 +42,66 @@
 			<hr>
 			<article>
 				<h2>{{ series.title }} Events</h2>
-		{% set events = craft.entries.section('events').authorId(user.id) %}
+
+		{% set events = craft.entries.section('events').authorId(series.author.id) %}
+
+
+		{% if events | length %}
 
 		
-		{% for date, eventsThisMonth in events |group("eventStartDate|date('F Y')")%}
-        <section>
-          <hgroup>
-            <h6>{{date | date("F,  Y ")}}</h3>
-          </hgroup>
-          {% for event in eventsThisMonth %}
-          <div class="media">
-            <div class="media-left pull-left media-middle">
-              <a href="{{event.url}}">
-                <img src="holder.js/200x200?text=Image" alt="">
-              </a>
-            </div>
-              <div class="media-body">
-                <h6>{{ event.author.lastName }}</h6>
-                <a href="{{ event.url}}"><h3 style="margin-top:0px; margin-bottom:0px;">{{ event.title }}</h3></a>
-                {% if event.eventType | length %}
-                  {% for type in event.eventType %}
-                  <h6 class="badge" style="margin-top:0px; margin-bottom:0px;"> {{ type.title }}</h6>
-                  {% endfor %}
-                {% endif %}
-                <h4>
-                    {{ event.eventStartDate | date('F j, Y') }}
-                    {% if event.eventEndDate | date('F j, Y') != event.eventStartDate | date('F j, Y') %}
-                      – {{ event.eventEndDate | date('F j, Y') }}
-                    {% endif %}
+			{% for date, eventsThisMonth in events |group("eventStartDate|date('F Y')")%}
+	        <section>
+	          <hgroup>
+	            <h6>{{date | date("F,  Y ")}}</h3>
+	          </hgroup>
+	          {% for event in eventsThisMonth %}
+	          <div class="media">
+	            <div class="media-left pull-left media-middle">
+	              <a href="{{event.url}}">
+	                <img src="holder.js/200x200?text=Image" alt="">
+	              </a>
+	            </div>
+	              <div class="media-body">
+	                <h6>{{ event.author.lastName }}</h6>
+	                <a href="{{ event.url}}"><h3 style="margin-top:0px; margin-bottom:0px;">{{ event.title }}</h3></a>
+	                {% if event.eventType | length %}
+	                  {% for type in event.eventType %}
+	                  <h6 class="badge" style="margin-top:0px; margin-bottom:0px;"> {{ type.title }}</h6>
+	                  {% endfor %}
+	                {% endif %}
+	                <h4>
+	                    {{ event.eventStartDate | date('F j, Y') }}
+	                    {% if event.eventEndDate | date('F j, Y') != event.eventStartDate | date('F j, Y') %}
+	                      – {{ event.eventEndDate | date('F j, Y') }}
+	                    {% endif %}
 
-                </h4>
+	                </h4>
 
-                <h5 class="date-time">{{ event.eventStartTime | date('g:ia') }} 
-                  {% if event.eventEndTime %}
-                  – 
-                  {{ event.eventEndTime | date('g:ia') }}
-                  {% endif %}
-                </h5>
-                {% if event.borough | length %}
-                <h5><span class="glyphicon glyphicon-map-marker"></span> 
-                    {{ event.borough[0].title }}
-                </h5>
-                {% endif %}
-                <a href="" class="btn btn-default"> Sync with Calendar</a>
-              </div>
-            </div>
+	                <h5 class="date-time">{{ event.eventStartTime | date('g:ia') }} 
+	                  {% if event.eventEndTime %}
+	                  – 
+	                  {{ event.eventEndTime | date('g:ia') }}
+	                  {% endif %}
+	                </h5>
+	                {% if event.borough | length %}
+	                <h5><span class="glyphicon glyphicon-map-marker"></span> 
+	                    {{ event.borough[0].title }}
+	                </h5>
+	                {% endif %}
+	                <a href="" class="btn btn-default"> Sync with Calendar</a>
+	              </div>
+	            </div>
 
-          </section>
-          <hr>
-          {% endfor %}
+	          </section>
+	          <hr>
+	          {% endfor %}
+
       {% endfor %}
+       {% else %}
+	        	<div class="alert alert-warning" role="alert">
+	        		No Events at this time.
+	        	</div>
+	   {% endif %}
 				
 			</article>
 

@@ -7,10 +7,11 @@
 
 
 
-{% set readingSeries = craft.entries.slug( 'brooklyn-arts-press' ).first() %}
+{% set readingSeries = craft.entries.section('readingSeries').authorId(entry.author.id).first() %}
 
 
 <div class="container">
+
 	<div class="page-header">
 		<div class="pull-right">
 			{% if entry.facebook %}
@@ -26,7 +27,7 @@
 			{% endif %}
 
 		</div>
-		<a href="/series/{{readingSeries.title |replace({' ': '-'}) }}">
+		<a href="/{{readingSeries.uri }}">
 			<h5>{{ readingSeries.title }} </h5>
 		</a>
 		<h1>{{ entry.title }} ! </h1>
@@ -35,16 +36,9 @@
 
 	<div class="row">
 		<div class="col-md-8">
-			<h3>
-					 {{ entry.eventStartDate | date('F j, Y') }}
-	                {% if entry.eventEndDate != entry.eventStartDate %}
-	                  – {{ entry.eventEndDate | date('F j, Y') }}
-	                {% endif %}
-			</h3>
-			{% if entry.cost %}
-			<h5>Cost: {{entry.cost}}</h5>
-			{% endif %}
-			<h4 class="date-time">{{ entry.eventStartDate | date('g:ia') }} – {{ entry.eventEndDate | date('g:ia') }}</h4>
+		
+			
+			
 			<p>{{ entry.description}}</p>
 
 			{% if ( entry.facebookInvite or entry.externalTicketingUrl) %}
@@ -87,6 +81,16 @@
 		</div>
 
 		<div class="col-md-4">
+			<h3>
+					 {{ entry.eventStartDate | date('F j, Y') }}
+	                {% if entry.eventEndDate != entry.eventStartDate %}
+	                  – {{ entry.eventEndDate | date('F j, Y') }}
+	                {% endif %}
+			</h3>
+			{% if entry.cost %}
+			<h5>Cost: {{entry.cost}}</h5>
+			<h4 class="date-time">{{ entry.eventStartDate | date('g:ia') }} – {{ entry.eventEndDate | date('g:ia') }}</h4>
+			{% endif %}
 			<a style="margin-bottom: 20px" href="" class="btn btn-block btn-default"><h4>Sync with Calendar</h4></a>
 
 			<a style="margin-bottom: 20px" href="/series/{{readingSeries.title |replace({' ': '-'}) }}" class="btn btn-block btn-primary"><h4>View More From {{ readingSeries.title }}</h4></a>
