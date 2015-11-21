@@ -19,6 +19,8 @@
 
 {% if series.mainImage | length %}
 	<img src="{{ series.mainImage[0].getUrl(wide) }}">
+{% else %}
+<img src="holder.js/1405x300?text={{series.title}}">
 {% endif %}
 
 
